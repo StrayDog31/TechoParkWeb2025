@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% include 'layouts/header.html' %}
+    <style>
+      .profile-img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 5%;
+      }
+      .settings-card {
+        transition: transform 0.2s;
+      }
+      .settings-card:hover {
+        transform: translateY(-2px);
+      }
+      .avatar-preview {
+        border: 2px dashed #dee2e6;
+        border-radius: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 120px;
+        width: 120px;
+        overflow: hidden;
+      }
+      .answer-textarea:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+      }
+    </style>
+</head>
+<body>
+    {% include 'layouts/nav-bar.html' %}
+    <main class="container my-4">
+      <div class="row">
+        <section class="col-lg-8 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h4">Profile Settings</h1>
+          </div>
+          
+          <div class="card mb-4 settings-card">
+            <div class="card-body">
+              <form>
+                <div class="row mb-4">
+                  <div class="col-md-3 text-center">
+                    <div class="avatar-preview mb-3" id="avatarPreview">
+                      <img src="./../images/unlogged_user.png" alt="Current avatar" class="profile-img" id="currentAvatar">
+                    </div>
+                    <div class="d-flex flex-column">
+                      <input type="file" id="avatarUpload" accept="image/*" class="d-none">
+                      <button type="button" class="btn btn-outline-dark btn-sm mb-2" onclick="document.getElementById('avatarUpload').click()">
+                        <i class="bi bi-upload"></i> Upload New
+                      </button>
+                      <button type="button" class="btn btn-outline-danger btn-sm" id="removeAvatar">
+                        <i class="bi bi-trash"></i> Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Login</label>
+                      <input type="text" class="form-control answer-textarea" id="username" value="antiqueMouse">
+                    </div>
+                    <div class="mb-3">
+                      <label for="displayName" class="form-label">Nickname</label>
+                      <input type="text" class="form-control answer-textarea" id="displayName" value="Yakovlev Sergey">
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control answer-textarea" id="email" value="web12@example.com">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-outline-danger me-2">Cancel</button>
+                  <button type="submit" class="btn btn-outline-success">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        {% include 'layouts/side-bar.html' %}
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
