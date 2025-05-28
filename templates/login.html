@@ -1,11 +1,27 @@
+<<<<<<< HEAD
 {% load django_bootstrap5 %}
+=======
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% include 'layouts/header.html' %}
+<<<<<<< HEAD
     {% bootstrap_css %}
     <style>
+=======
+    <style>
+      .navbar-brand {
+        font-weight: bold;
+        color: black !important;
+      }
+      .logo-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+      }
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
       .login-container {
         display: flex;
         flex-direction: column;
@@ -31,12 +47,23 @@
       .sidebar {
         width: 300px;
       }
+<<<<<<< HEAD
       .form-control:focus {
         border-color: #ffc107;
         box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
       }
       .alert {
         margin-top: 1rem;
+=======
+      .form-input:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+      }
+      .nav-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
       }
     </style>
 </head>
@@ -50,6 +77,7 @@
         <div class="login-card card">
           <div class="card-body">
             <h2 class="h4 text-center mb-4">Login to your account</h2>
+<<<<<<< HEAD
             
             <!-- Блок для отображения ошибок -->
             {% if form.errors %}
@@ -76,21 +104,76 @@
               <div class="text-center">
                 <span class="text-muted">Don't have an account? </span>
                 <a href="{% url 'register' %}" class="text-warning">Create one</a>
+=======
+            <form>
+              <div class="mb-3">
+                <label for="username" class="form-label">Login</label>
+                <input type="text" class="form-control form-input" id="username" placeholder="Enter your username" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control form-input" id="password" placeholder="Enter your password" required>
+              </div>
+              <div class="text-center mb-3">
+                <a href="#" class="small text-muted">Forgot password?</a>
+              </div>
+              <button type="submit" class="btn btn-warning w-100 mb-3">Login</button>
+              <div class="text-center">
+                <span class="text-muted">Don't have an account? </span>
+                <a href="#" class="text-warning">Create one</a>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
               </div>
             </form>
           </div>
         </div>
         
+<<<<<<< HEAD
         {% include 'layouts/side-bar.html' %}
       </div>
       
       <div class="text-center mt-4">
         <a href="{% url 'main' %}" class="btn btn-outline-dark btn-sm">
+=======
+        <div class="sidebar">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Popular tags:</h5>
+              <div class="d-flex flex-wrap gap-1">
+                <a href="#" class="badge bg-warning text-white text-decoration-none">WW2</a>
+                <a href="#" class="badge bg-warning text-white text-decoration-none">Wehrmacht</a>
+                <a href="#" class="badge bg-warning text-white text-decoration-none">Stahlhelm</a>
+                <a href="#" class="badge bg-warning text-white text-decoration-none">Uniform</a>
+                <a href="#" class="badge bg-warning text-white text-decoration-none">WW1</a>
+                <a href="#" class="badge bg-warning text-white text-decoration-none">red army</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Best Members:</h5>
+              <ul class="list-unstyled">
+                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">Erwin Kunz</a></li>
+                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">Shelvis</a></li>
+                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">antiqueMouse</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <a href="#" class="btn btn-outline-dark btn-sm">
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
           <i class="bi bi-arrow-left"></i> Back to Forum
         </a>
       </div>
     </div>
 
+<<<<<<< HEAD
     {% bootstrap_javascript %}
+=======
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
 </body>
 </html>

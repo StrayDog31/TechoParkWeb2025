@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 {% load django_bootstrap5 %}
+=======
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% include 'layouts/header.html' %}
+<<<<<<< HEAD
     <style>
+=======
+        <style>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
         .editor-toolbar {
             background-color: #f8f9fa;
             padding: 5px;
@@ -15,11 +22,16 @@
         .answer-textarea:focus {
             border-color: #ffc107;
             box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+<<<<<<< HEAD
         }
+=======
+         }
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
         #questionText {
             min-height: 200px;
             border-radius: 0 0 5px 5px;
         }
+<<<<<<< HEAD
         .form-buttons {
             display: flex;
             gap: 1rem;
@@ -28,6 +40,8 @@
         .form-buttons .btn {
             flex: 0 0 auto;
         }
+=======
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
     </style>
 </head>
 <body>
@@ -40,6 +54,7 @@
                         <h5 class="mb-0">Create a new topic</h5>
                     </div>
                     <div class="card-body">
+<<<<<<< HEAD
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             
@@ -50,13 +65,46 @@
                                     <i class="bi bi-x-lg me-1"></i> Cancel
                                 </a>
                                 {% bootstrap_button "Ask" button_type="submit" button_class="btn-warning" %}
+=======
+                        <form>
+                            <div class="mb-4">
+                                <label for="questionTitle" class="form-label fw-bold">Title</label>
+                                <input type="text" class="form-control answer-textarea" id="questionTitle">
+                            </div>
+                            <div class="mb-4">
+                                <label for="questionText" class="form-label fw-bold">Body</label>
+                                <div class="editor-toolbar mb-0">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-type-bold"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-type-italic"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-code"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ul"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-list-ol"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-link"></i></button>
+                                </div>
+                                <textarea class="form-control answer-textarea" id="questionText" rows="8"></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="questionTags" class="form-label fw-bold">Tags</label>
+                                <input type="text" class="form-control answer-textarea" id="questionTags">
+                                <div class="mt-2" id="selectedTags"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary">Preview</button>
+                                <button type="submit" class="btn btn-warning text-white">Send your question</button>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
                             </div>
                         </form>
                     </div>
                 </div>
             </section>
 
+<<<<<<< HEAD
             {% include 'layouts/side-bar.html' %}
+=======
+        {% include 'layouts/side-bar.html' %}
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </main>

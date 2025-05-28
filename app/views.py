@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 
 from django.contrib import auth
@@ -59,6 +60,23 @@ def index(request):
             question.current_user_vote = None
 
     page = paginate(request, questions_list, 20)
+=======
+from django.core.paginator import Paginator
+from django.shortcuts import render, get_object_or_404
+from .models import Question, Answer
+from django.db.models import Count
+
+
+def index(request):
+    questions_list = Question.objects.all() \
+        .annotate(answers_count=Count('answers')) \
+        .order_by('-created_at')
+
+    paginator = Paginator(questions_list, 20)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
     return render(request, 'main.html', {
         'questions': page.object_list,
         'page_obj': page
@@ -66,6 +84,7 @@ def index(request):
 
 
 def hot(request):
+<<<<<<< HEAD
     if request.user.is_authenticated:
         user_likes = QuestionLike.objects.filter(
             question=OuterRef('pk'),
@@ -104,12 +123,23 @@ def hot(request):
             question.current_user_vote = None
 
     page = paginate(request, questions_list, 20)
+=======
+    questions_list = Question.objects.all() \
+        .annotate(answers_count=Count('answers')) \
+        .order_by('-rating', '-created_at')
+
+    paginator = Paginator(questions_list, 20)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
     return render(request, 'hot.html', {
         'questions': page.object_list,
         'page_obj': page
     })
 
 
+<<<<<<< HEAD
 def search_tag(request, tag_name):
     base_query = Question.objects.filter(tags__name=tag_name) \
         .annotate(answers_count=Count('answers'))
@@ -163,12 +193,20 @@ def search_tag(request, tag_name):
 def single_question(request, question_id):
     question = get_object_or_404(
         Question.objects.select_related('author').prefetch_related('tags'),
+=======
+def single_question(request, question_id):
+    question = get_object_or_404(
+        Question.objects
+        .select_related('author')
+        .prefetch_related('tags'),
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
         pk=question_id
     )
 
     question.views += 1
     question.save()
 
+<<<<<<< HEAD
     if request.user.is_authenticated:
         answers_list = Answer.objects.filter(question=question) \
             .select_related('author') \
@@ -226,11 +264,32 @@ def single_question(request, question_id):
 
 
 @login_required(login_url=reverse_lazy('login'))
+=======
+    answers_list = Answer.objects.filter(question=question) \
+        .select_related('author') \
+        .order_by('-is_solution', '-rating', 'created_at')
+
+    paginator = Paginator(answers_list, 5)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+    user_votes = {}
+
+    return render(request, 'single-question.html', {
+        'question': question,
+        'answers': page.object_list,
+        'page_obj': page,
+        'user_votes': user_votes,
+    })
+
+
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
 def add_question(request):
     return render(request, 'create-topic.html')
 
 
 def create_account(request):
+<<<<<<< HEAD
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -392,3 +451,14 @@ def mark_as_solution(request, answer_id):
 
     except Answer.DoesNotExist:
         return JsonResponse({'error': 'Answer not found'}, status=404)
+=======
+    return render(request, 'create-account.html')
+
+
+def log_in(request):
+    return render(request, 'login.html')
+
+
+def settings(request):
+    return render(request, 'settings.html')
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c

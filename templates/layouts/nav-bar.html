@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load static %}
 <style>
     .navbar-brand {
@@ -70,4 +71,62 @@
             </div>
         {% endif %}
     </div>
+=======
+{%  load static %}
+<style>
+      .navbar-brand {
+        font-weight: bold;
+        color: black !important;
+      }
+      .account-dropdown {
+        cursor: pointer;
+      }
+      .account-img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+      .logo-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+      }
+      .answer-textarea:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+      }
+      .dropdown-item:active {
+          background-color: #ffc107 !important;
+          color: #000 !important;
+      }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fs-4" href="{% url "main" %}">
+      <div class="d-flex align-items-center">
+        <img src="{%  static "/images/forum-logo.png" %}" alt="forum_logo" class="logo-img">
+        <h1 class="h4 fs-1 fw-bold ms-3">War Relics Forum</h1>
+      </div>
+    </a>
+    <div class="d-flex align-items-center ms-auto me-3">
+      <div class="input-group">
+        <input type="text" class="form-control answer-textarea" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+    <a href="{% url "ask" %}" class="btn btn-outline-dark me-3">Ask!</a>
+    <div class="dropdown">
+      <a class="d-flex align-items-center text-decoration-none dropdown-toggle account-dropdown text-warning" href="#" role="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{%  static "/images/unlogged_user.png" %}" alt="Account image" class="rounded-circle account-img">
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+        <li><a class="dropdown-item" href="{% url "settings" %}">Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
 </nav>

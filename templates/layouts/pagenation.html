@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="pagination">
     {% if page_obj.paginator.num_pages > 1 %}
         <a href="?page=1" class="badge bg-light text-dark ms-1 {% if page_obj.number == 1 %}active{% endif %}">1</a>
@@ -28,3 +29,40 @@
         background-color: #ffc107 !important;
     }
 </style>
+=======
+<div>
+{% if page_obj.paginator.num_pages > 1 %}
+    {% if page_obj.number|add:1 < page_obj.paginator.num_pages %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="badge bg-light text-dark ms-1">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+        <a href="#" class="badge bg-warning text-white ms-1">{{ page_obj.number }}</a>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="badge bg-light text-dark ms-1">{{ page_obj.next_page_number }}</a>
+        {% endif %}
+        {% if page_obj.number|add:2 < page_obj.paginator.num_pages %}
+        <a href="?page={{ page_obj.number|add:2 }}" class="badge bg-light text-dark ms-1">{{ page_obj.number|add:2 }}</a>
+        {% endif %}
+        {% if page_obj.number|add:2 < page_obj.paginator.num_pages|add:-1 %}
+        <a href="#" class="badge bg-light text-dark ms-1">...</a>
+        {% endif %}
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="badge bg-light text-dark ms-1">{{ page_obj.paginator.num_pages }}</a>
+    {% else %}
+        <a href="?page=1" class="badge bg-light text-dark ms-1">1</a>
+        {% if page_obj.number|add:-3 > 1 %}
+        <a href="#" class="badge bg-light text-dark ms-1">...</a>
+        {% endif %}
+        {% if page_obj.number|add:-2 >= 1 and page_obj.number|add:-2 != 1 %}
+        <a href="?page={{ page_obj.number|add:-2 }}" class="badge bg-light text-dark ms-1">{{ page_obj.number|add:-2 }}</a>
+        {% endif %}
+        {% if page_obj.has_previous and page_obj.previous_page_number != 1 %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="badge bg-light text-dark ms-1">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+        <a href="#" class="badge bg-warning text-white ms-1">{{ page_obj.number }}</a>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="badge bg-light text-dark ms-1">{{ page_obj.next_page_number }}</a>
+        {% endif %}
+    {% endif %}
+{% endif %}
+</div>
+>>>>>>> 6182a2fc9cdbccc42e7d88b34e4061195c23250c
