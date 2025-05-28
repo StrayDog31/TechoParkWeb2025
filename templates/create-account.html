@@ -1,31 +1,19 @@
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% include 'layouts/header.html' %}
     <style>
-      .navbar-brand {
-        font-weight: bold;
-        color: black !important;
-      }
-      .account-dropdown {
-        cursor: pointer;
-      }
-      .account-img {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-      }
       .profile-img {
         width: 120px;
         height: 120px;
         object-fit: cover;
         border-radius: 5%;
       }
-      .logo-img {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
+      .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
       }
       .register-card {
         transition: transform 0.2s;
@@ -47,15 +35,6 @@
         border-color: #ffc107;
         box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
       }
-      .btn-register {
-        background-color: #ffc107;
-        border-color: #ffc107;
-        color: black;
-      }
-      .btn-register:hover {
-        background-color: #e0a800;
-        border-color: #e0a800;
-      }
     </style>
 </head>
 <body>
@@ -67,86 +46,27 @@
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h4">Create New Account</h1>
           </div>
-          
+
           <div class="card mb-4 register-card">
             <div class="card-body">
-              <form>
-                <div class="row mb-4">
-                  <div class="col-md-3 text-center">
-                    <div class="avatar-preview mb-3" id="avatarPreview">
-                      <img src="./../images/unlogged_user.png" alt="Default avatar" class="profile-img" id="currentAvatar">
-                    </div>
-                    <div class="d-flex flex-column">
-                      <input type="file" id="avatarUpload" accept="image/*" class="d-none">
-                      <button type="button" class="btn btn-outline-dark btn-sm mb-2" onclick="document.getElementById('avatarUpload').click()">
-                        <i class="bi bi-upload"></i> Upload Avatar
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-md-9">
-                    <div class="mb-3">
-                      <label for="username" class="form-label">Login*</label>
-                      <input type="text" class="form-control form-input" id="username" placeholder="Choose your login" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="displayName" class="form-label">Nickame*</label>
-                      <input type="text" class="form-control form-input" id="displayName" placeholder="Chose your nickname on forum" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="form-label">Email*</label>
-                      <input type="email" class="form-control form-input" id="email" placeholder="Your email address" required>
-                    </div>
-                  </div>
-                </div>
+              <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
                 
                 <hr>
-                
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label for="password" class="form-label">Password*</label>
-                    <input type="password" class="form-control form-input" id="password" placeholder="Create a password" required>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="confirmPassword" class="form-label">Confirm Password*</label>
-                    <input type="password" class="form-control form-input" id="confirmPassword" placeholder="Repeat your password" required>
-                  </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3"> 
+                        <a href="login" class="btn btn-outline-danger w-100">Already have an account?</a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {% bootstrap_button "Register!" button_type="submit" button_class="btn-success w-100" %}
+                    </div>
                 </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                  <a href="login.html" class="btn btn-outline-danger">Already have an account?</a>
-                  <button type="submit" class="btn btn-outline-success">Register</button>
-                </div>
-              </form>
+            </form>
             </div>
           </div>
         </section>
-        
-<aside class="col-lg-4">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title fw-bold">Popular tags:</h5>
-              <div class="d-flex flex-wrap gap-1">
-                <a href="#" class="badge bg-warning text-decoration-none">WW2</a>
-                <a href="#" class="badge bg-warning text-decoration-none">Wehrmacht</a>
-                <a href="#" class="badge bg-warning text-decoration-none">Stahlhelm</a>
-                <a href="#" class="badge bg-warning text-decoration-none">Uniform</a>
-                <a href="#" class="badge bg-warning text-decoration-none">WW1</a>
-                <a href="#" class="badge bg-warning text-decoration-none">red army</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title fw-bold">Best Members:</h5>
-              <ul class="list-unstyled">
-                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">Erwin Kunz</a></li>
-                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">Shelvis</a></li>
-                <li class="mb-1"><a href="#" class="text-decoration-none text-dark">antiqueMouse</a></li>
-              </ul>
-            </div>
-          </div>
-        </aside>
+          {% include 'layouts/side-bar.html' %}
       </div>
     </main>
 

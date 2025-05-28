@@ -9,10 +9,8 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        # Сохраняем администраторов
         admins = list(User.objects.filter(is_superuser=True).values_list('id', flat=True))
 
-        # Удаление данных в правильном порядке (чтобы избежать ошибок ForeignKey)
         models = [
             AnswerDislike, AnswerLike,
             QuestionDislike, QuestionLike,
@@ -23,8 +21,6 @@ class Command(BaseCommand):
         for model in models:
             self.stdout.write(f"Удаление {model.__name__}...")
             model.objects.all().delete()
-
-        # Удаляем всех пользователей, кроме админов
         User.objects.exclude(id__in=admins).delete()
 
         self.stdout.write(self.style.SUCCESS("База данных успешно очищена!"))

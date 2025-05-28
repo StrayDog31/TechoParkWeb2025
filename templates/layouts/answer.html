@@ -1,55 +1,97 @@
 {% load static %}
-<div class="card mb-3 answer-card {% if answer.isSolution %}best-answer{% endif %}">
+<div class="card mb-3 answer-card {% if answer.is_solution %}best-answer{% endif %}" data-answer-id="{{ answer.id }}">
   <div class="card-body">
     <div class="row">
       <div class="col-2 text-center">
-        <div class="d-flex flex-column align-items-center">
-          <div class="d-flex align-items-center justify-content-center gap-2">
-            <div class="d-flex flex-column align-items-center">
-              <button type="button" class="btn btn-outline-success btn-sm">
-                <i class="bi bi-arrow-up"></i>
-              </button>
-              <span class="count">{{ answer.likes }}</span>
-            </div>
-            <div class="d-flex flex-column align-items-center">
-              <button type="button" class="btn btn-outline-danger btn-sm">
-                <i class="bi bi-arrow-down"></i>
-              </button>
-              <span class="count">{{ answer.dislikes }}</span>
-            </div>
+        <div class="rating-container">
+          <div class="d-flex flex-column align-items-center">
+            <button class="btn btn-sm answer-like-btn 
+                {% if answer.current_user_vote == 'like' %}
+                    btn-success
+                {% else %}
+                    btn-outline-success
+                {% endif %}"
+                data-answer-id="{{ answer.id }}">
+              <i class="bi bi-arrow-up"></i>
+            </button>
           </div>
-          {% if answer.isSolution %}
-            <div class="mt-2 text-success"><i class="bi bi-check-circle-fill"></i></div>
-          {% endif %}
+          
+          <div class="rating-value answer-rating" data-answer-id="{{ answer.id }}">
+            {{ answer.rating }}
+          </div>
+          
+          <div class="d-flex flex-column align-items-center">
+            <button class="btn btn-sm answer-dislike-btn 
+                {% if answer.current_user_vote == 'dislike' %}
+                    btn-danger
+                {% else %}
+                    btn-outline-danger
+                {% endif %}"
+                data-answer-id="{{ answer.id }}">
+              <i class="bi bi-arrow-down"></i>
+            </button>
+          </div>
         </div>
+        {% if answer.is_solution %}
+          <div class="mt-2 text-success"><i class="bi bi-check-circle-fill"></i></div>
+        {% endif %}
       </div>
+      
       <div class="col-10">
         <div class="card-text mb-3">
           <p>{{ answer.text }}</p>
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex gap-2">
-            <button class="btn btn-outline-secondary btn-sm">Share</button>
+            <!-- Дополнительные кнопки -->
           </div>
-          {% if answer.isSolution %}
-            <button class="btn btn-success btn-sm disabled">Best answer</button>
-          {% else %}
-            <button class="btn btn-outline-success btn-sm">Mark as solution</button>
-          {% endif %}
+          {% if request.user == question.author %}
+    <button class="btn btn-sm mark-solution-btn 
+        {% if answer.is_solution %}
+            btn-success d-none
+        {% else %}
+            btn-outline-success
+        {% endif %}"
+        data-answer-id="{{ answer.id }}"
+        data-was-solution="{{ answer.is_solution|yesno:'true,false' }}"
+        title="Mark as best answer">
+      <i class="bi {% if answer.is_solution %}bi-check-circle-fill{% else %}bi-check-circle{% endif %}"></i>
+      {% if answer.is_solution %}Solution{% else %}Mark as solution{% endif %}
+    </button>
+  {% endif %}
         </div>
       </div>
     </div>
   </div>
+  
   <div class="card-footer bg-transparent">
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center">
-        <img src="{% static 'images/logged_user.png' %}" alt="user" class="rounded-circle account-img me-2">
+        <img src="{% if answer.author.profile.avatar %}{{ answer.author.profile.avatar.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" 
+             alt="{{ answer.author.username }}" 
+             class="rounded-circle account-img me-2"
+             style="width: 40px; height: 40px; object-fit: cover;"
+             onerror="this.onerror=null; this.src='{% static 'images/default_avatar.png' %}'">
         <div>
-          <div class="fw-bold">HelmetExpert</div>
-          <div class="text-muted small">answered 5 hours ago</div>
+          <div class="fw-bold">
+            <a href="#" class="text-decoration-none">
+              {{ answer.author.username }}
+              {% if answer.author.profile.verified %}
+                <i class="bi bi-patch-check-fill text-primary" title="Verified user"></i>
+              {% endif %}
+            </a>
+          </div>
+          <div class="text-muted small">
+            answered {{ answer.created_at|timesince }} ago
+            {% if answer.updated_at != answer.created_at %}
+              (edited {{ answer.updated_at|timesince }} ago)
+            {% endif %}
+          </div>
         </div>
       </div>
-      <button class="btn btn-outline-danger btn-sm">Report</button>
+      {% if request.user != answer.author %}
+        <button class="btn btn-outline-danger btn-sm">Report</button>
+      {% endif %}
     </div>
   </div>
 </div>

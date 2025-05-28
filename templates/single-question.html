@@ -1,11 +1,13 @@
+{% load django_bootstrap5 %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      {% include 'layouts/header.html' %}
-      <style>
+    <title>{{ question.title }}</title>
+    {% include 'layouts/header.html' %}
+    <style>
       .question-card, .answer-card {
         transition: transform 0.2s;
       }
@@ -24,9 +26,16 @@
         object-position: top;
         border-radius: 5%;
       }
-      .count {
-        font-size: 0.75rem;
-        margin-top: 0.2rem;
+      .rating-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .rating-value {
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
       }
       .best-answer {
         border-left: 4px solid #28a745;
@@ -35,49 +44,76 @@
       .answer-textarea:focus {
         border-color: #ffc107;
         box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
-    }
+      }
     </style>
   </head>
 
   <body>
     {% include 'layouts/nav-bar.html' %}
-    <main class="container my-4">
+    <div class="container mt-4">
       <div class="row">
-        <section class="col-lg-8 mb-4">
-          <div class="card mb-4 question-card">
-              {% include 'layouts/question.html' %}
+        <div class="col-lg-8">
+          <!-- Вопрос -->
+          <div class="card mb-4 question-card" data-question-id="{{ question.id }}">
+            <div class="card-body">
+              <h1 class="h3">{{ question.title }}</h1>
+              <div class="d-flex align-items-center mb-3">
+                {% if question.author.profile.avatar %}
+                  <img src="{{ question.author.profile.avatar.url }}" 
+                       alt="{{ question.author.username }}" 
+                       class="rounded-circle account-img me-2">
+                {% else %}
+                  <img src="{% static 'images/default_avatar.png' %}" 
+                       alt="{{ question.author.username }}" 
+                       class="rounded-circle account-img me-2">
+                {% endif %}
+                <span class="text-muted">
+                  Asked by {{ question.author.username }} 
+                  on {{ question.created_at|date:"M d, Y" }}
+                </span>
+              </div>
+              <p class="card-text">{{ question.text }}</p>
+              
+              <div class="mt-3">
+                {% for tag in question.tags.all %}
+                  <span class="badge bg-warning text-white">{{ tag.name }}</span>
+                {% endfor %}
+              </div>
+            </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="h4">3 Answers</h3>
-            <div class="btn-group btn-group-sm">
-              <button class="btn btn-outline-secondary active">Newest</button>
-              <button class="btn btn-outline-secondary">Oldest</button>
-              <button class="btn btn-outline-secondary">Top voted</button>
-            </div>
-          </div>
-            {%  for answer in answers %}
-                {% include 'layouts/answer.html' %}
-            {% endfor %}
-            {% include 'layouts/pagenation.html' %}
-          <div class="card mt-4">
-            <div class="card-header bg-light">
-              <h5 class="mb-0">Your Answer</h5>
-            </div>
-            <div class="card-body">
-              <form>
-                <div class="mb-4">
-                    <textarea class="form-control answer-textarea" id="answerText" rows="5" placeholder="Write your answer here..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-warning">Send Your Answer</button>
-              </form>
-            </div>
-          </div>
-        </section>
+          <h2 class="h4 mb-3">{{ answers.paginator.count }} Answers</h2>
           
-          {% include 'layouts/side-bar.html' %}
+          {% for answer in answers %}
+            {% include 'layouts/answer.html' %}
+          {% endfor %}
+
+          {% include 'layouts/pagenation.html' with page_obj=answers %}
+
+          {% if request.user.is_authenticated %}
+            <div class="card mt-4">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">Your Answer</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="submit_answer" value="1">
+                  {% bootstrap_form form %}
+                  <button type="submit" class="btn btn-warning mt-3">Post Answer</button>
+                </form>
+              </div>
+            </div>
+          {% else %}
+            <div class="alert alert-info mt-4">
+              Please <a href="{% url 'login' %}?next={{ request.path }}">login</a> to post an answer.
+            </div>
+          {% endif %}
+        </div>
+         {% include 'layouts/side-bar.html' %}
       </div>
-    </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static 'app.js' %}"></script>
   </body>
 </html>
