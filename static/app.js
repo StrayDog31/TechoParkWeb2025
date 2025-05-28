@@ -226,7 +226,6 @@ function markAsSolution(button) {
 
 function updateSolutionUI(answerId, questionId, isSolution) {
     try {
-        // 1. Обновляем все карточки
         document.querySelectorAll('.answer-card').forEach(card => {
             if (!card) return;
 
@@ -237,18 +236,15 @@ function updateSolutionUI(answerId, questionId, isSolution) {
             const wasSolution = solutionBtn?.dataset.wasSolution === 'true';
 
             if (currentId === answerId) {
-                // Текущий ответ
                 card.classList.toggle('best-answer', isSolution);
 
                 if (isSolution) {
-                    // Добавляем иконку
                     if (iconContainer && !existingIcon) {
                         const icon = document.createElement('div');
                         icon.className = 'mt-2 text-success';
                         icon.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
                         iconContainer.appendChild(icon);
                     }
-                    // Обновляем кнопку
                     if (solutionBtn) {
                         solutionBtn.classList.replace('btn-outline-success', 'btn-success');
                         const icon = solutionBtn.querySelector('i');
@@ -258,9 +254,7 @@ function updateSolutionUI(answerId, questionId, isSolution) {
                         solutionBtn.dataset.wasSolution = 'true';
                     }
                 } else {
-                    // Удаляем иконку
                     if (existingIcon) existingIcon.remove();
-                    // Возвращаем кнопку
                     if (solutionBtn) {
                         solutionBtn.classList.replace('btn-success', 'btn-outline-success');
                         const icon = solutionBtn.querySelector('i');
@@ -271,11 +265,9 @@ function updateSolutionUI(answerId, questionId, isSolution) {
                     }
                 }
             } else {
-                // Другие ответы
                 card.classList.remove('best-answer');
                 if (existingIcon) existingIcon.remove();
 
-                // Для ответа, который был решением при загрузке
                 if (wasSolution && solutionBtn) {
                     solutionBtn.classList.replace('btn-success', 'btn-outline-success');
                     const icon = solutionBtn.querySelector('i');
@@ -285,7 +277,6 @@ function updateSolutionUI(answerId, questionId, isSolution) {
                     solutionBtn.dataset.wasSolution = 'false';
                 }
 
-                // Для всех остальных ответов
                 if (solutionBtn && !wasSolution) {
                     solutionBtn.classList.remove('d-none');
                     solutionBtn.classList.replace('btn-success', 'btn-outline-success');
@@ -293,7 +284,6 @@ function updateSolutionUI(answerId, questionId, isSolution) {
             }
         });
 
-        // 2. Перемещаем решение вверх
         if (isSolution) {
             const container = document.querySelector('.answers-list');
             const solutionCard = document.querySelector(`.answer-card[data-answer-id="${answerId}"]`);
@@ -303,7 +293,6 @@ function updateSolutionUI(answerId, questionId, isSolution) {
         }
     } catch (error) {
         console.error('Error in updateSolutionUI:', error);
-        // Замените showErrorNotification на ваш метод показа ошибок
         alert('An error occurred while updating the solution status');
     }
 }
